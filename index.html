@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IELTS Speaking Practice</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap">
+<style>
+/* ===== CÀI ĐẶT CỦA THẦY: chỉ sửa 3 dòng trong phần <script> có chữ CONFIG ===== */
+:root{--bg:#faefe5;--card:#fff;--soft:#f3f1ef;--ink:#1f2328;--mute:#6b6f76;--green:#3a9d3f;--green-bg:#e3f4e1;--orange:#ef7a3d;--orange-bg:#fde6d8;--blue:#4b5bd7;--blue-bg:#e7e9fb;--line:#e8e2dc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Nunito,system-ui,sans-serif;padding:16px}
+.wrap{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);gap:20px}
+@media(max-width:880px){.wrap{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:18px;box-shadow:0 2px 10px rgba(80,50,20,.06)}
+.qbar{display:flex;align-items:center;gap:14px;padding:16px 20px;flex-wrap:wrap}
+.spk{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);background:#fff;display:grid;place-items:center;cursor:pointer;color:var(--orange);flex:none}
+.qtext{flex:1;min-width:0;font-size:1.3rem;font-weight:700}
+.overall{background:var(--green);color:#fff;border-radius:999px;padding:8px 22px;font-weight:700;font-size:1.05rem;white-space:nowrap}
+.overall b{font-size:1.25rem;margin-left:8px}
+.qpick{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 16px}
+textarea,input{font:inherit;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;background:#fff;min-width:0;color:var(--ink)}
+#name{flex:1 1 100%}#qList{flex:1 1 300px;resize:vertical}
+.btn.sm{font-size:1rem;padding:10px 18px;border-radius:12px;background:var(--green);color:#fff;border-color:var(--green);align-self:flex-start}
+.tpanel{margin:0 20px 16px;padding:14px;border:1.5px dashed var(--orange);border-radius:12px;background:var(--orange-bg);display:flex;flex-direction:column;gap:10px}
+.tpanel textarea{width:100%;resize:vertical}
+.tpanel .row{display:flex;gap:8px;flex-wrap:wrap}
+#outLink{flex:1 1 240px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 16px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:4px 14px;font:inherit;font-weight:700;font-size:.9rem;cursor:pointer;color:var(--mute)}
+.chip.done{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.chip.cur{background:var(--orange);border-color:var(--orange);color:#fff}
+.qnum{color:var(--orange);font-weight:800;margin-right:6px}
+.main{margin-top:18px;overflow:hidden}
+.tabs{display:flex;background:var(--soft)}
+.tab{flex:1;border:0;background:none;padding:16px 8px;font:inherit;font-weight:700;cursor:pointer;color:var(--ink)}
+.tab.on{background:#fff;border-radius:16px 16px 0 0}
+.cnt{display:inline-block;border-radius:999px;padding:1px 10px;margin-left:8px;font-size:.9rem}
+.c-all{background:#fde4e4;color:#e0403a}.c-pf{background:var(--blue-bg);color:var(--blue)}.c-lg{background:var(--green-bg);color:var(--green)}
+.body{padding:22px 28px}
+.body h3{margin:0 0 10px;font-size:1.15rem}
+#transcript{font-size:1.15rem;line-height:2.6;min-height:120px}
+.err{border-radius:6px;padding:3px 8px;cursor:pointer;border-bottom:2px solid}
+.err.pf{background:var(--blue-bg);border-color:var(--blue)}
+.err.lg{background:var(--green-bg);border-color:var(--green)}
+.err.dim{background:none;border-color:transparent;padding:0}
+.err.sel{outline:2px solid var(--orange)}
+.empty{color:var(--mute);font-size:1rem;line-height:1.7}
+.player{display:flex;align-items:center;gap:14px;margin:22px 0 6px;border:1.5px solid var(--line);border-radius:999px;padding:8px 18px 8px 8px}
+.play{width:52px;height:52px;border-radius:50%;border:0;background:var(--orange);color:#fff;cursor:pointer;flex:none;display:grid;place-items:center}
+.time{color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}
+#wave{flex:1;min-width:0;height:44px}
+.acts{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:20px}
+.btn{font:inherit;font-weight:700;font-size:1.1rem;border-radius:16px;padding:14px 28px;cursor:pointer;border:1.5px solid var(--line);background:#fff;color:var(--ink)}
+.btn.rec{background:var(--orange);color:#fff;border-color:var(--orange)}
+.btn.rec.live{background:#d93a2b;border-color:#d93a2b;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.75}}
+.btn:disabled{opacity:.5;cursor:default}
+.status{text-align:center;color:var(--mute);margin-top:10px;min-height:24px}
+.side{overflow:hidden;display:flex;flex-direction:column}
+.stabs{display:flex;background:var(--soft)}
+.stab{flex:1;border:0;background:none;padding:15px 6px;font:inherit;font-weight:700;cursor:pointer}
+.stab.on{background:#fff;border-radius:16px 16px 0 0}
+.spane{padding:18px;border:1.5px solid var(--green);border-radius:16px;margin:14px;flex:1;min-height:420px;overflow:auto}
+.crit{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.crit div{background:var(--soft);border-radius:10px;padding:8px 10px;font-size:.9rem}
+.crit b{float:right;color:var(--green);font-size:1rem}
+.item{border-bottom:1px dashed var(--line);padding:10px 0}
+.item .w{font-weight:700}
+.item .fix{color:var(--green);font-weight:700}
+.tag{font-size:.75rem;font-weight:700;border-radius:6px;padding:1px 7px;margin-right:6px}
+.tag.pf{background:var(--blue-bg);color:var(--blue)}.tag.lg{background:var(--green-bg);color:var(--green)}
+.ptext{white-space:pre-wrap;line-height:1.8}
+.ptext b{color:var(--green)}
+.hint{color:var(--mute);text-align:center;margin-top:40px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <div class="card">
+      <div class="qbar">
+        <button class="spk" id="speak" title="Nghe câu hỏi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></button>
+        <div class="qtext" id="qText">Have you ever forgotten something important?</div>
+        <div class="overall">Overall<b id="ov">–</b></div>
+      </div>
+      <div class="qpick">
+        <input id="name" placeholder="Tên của con">
+      </div>
+      <div class="tpanel" id="tpanel" hidden>
+        <b>Dành cho thầy:</b> dán các câu hỏi (mỗi câu một dòng), bấm Nạp câu hỏi, rồi gửi link bên dưới cho học sinh.
+        <textarea id="qList" rows="5" placeholder="Hãy điền các câu hỏi vào đây (mỗi câu hỏi một dòng)"></textarea>
+        <div class="row"><button class="btn sm" id="load">Nạp câu hỏi &amp; tạo link</button></div>
+        <div class="row" id="linkRow" hidden><input id="outLink" readonly><button class="btn sm" id="copy">Copy link</button></div>
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="card main">
+      <div class="tabs">
+        <button class="tab on" data-f="all">Tất cả <span class="cnt c-all" id="nAll">0 lỗi</span></button>
+        <button class="tab" data-f="pf">Trôi chảy &amp; Phát âm <span class="cnt c-pf" id="nPf">0 lỗi</span></button>
+        <button class="tab" data-f="lg">Từ vựng &amp; Ngữ pháp <span class="cnt c-lg" id="nLg">0 lỗi</span></button>
+      </div>
+      <div class="body">
+        <h3>Bài nói của bạn</h3>
+        <div id="transcript"><p class="empty">Bấm <b>Bắt đầu nói</b>, trả lời câu hỏi bằng tiếng Anh, rồi bấm <b>Dừng &amp; chấm bài</b>. Bài nói sẽ hiện ở đây, các lỗi được tô màu. Bấm vào chỗ tô màu để xem cách sửa.</p></div>
+        <div class="player">
+          <button class="play" id="play" disabled><svg id="pIco" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></button>
+          <span class="time" id="time">00:00/00:00</span>
+          <canvas id="wave"></canvas>
+        </div>
+        <div class="acts">
+          <button class="btn rec" id="rec">🎙 Bắt đầu nói</button>
+          <button class="btn" id="next">Câu tiếp theo ›</button>
+        </div>
+        <div class="status" id="status"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card side">
+    <div class="stabs">
+      <button class="stab on" data-p="err">Chi tiết lỗi</button>
+      <button class="stab" data-p="fix">Bài sửa</button>
+      <button class="stab" data-p="up">Nâng cấp</button>
+    </div>
+    <div class="spane" id="pane"><p class="hint">Kết quả chấm sẽ hiện ở đây sau khi con nói xong.</p></div>
+  </div>
+</div>
+
+<script>
+/* ================= CONFIG – THẦY SỬA Ở ĐÂY ================= */
+const GEMINI_KEY = "DAN_KEY_GEMINI_VAO_DAY";      // key miễn phí từ aistudio.google.com
+const GEMINI_MODEL = "gemini-2.5-flash";           // nếu Google đổi tên model, sửa dòng này
+const QUESTIONS = [
+  "Have you ever forgotten something important?",
+  "Do you like reading books?",
+  "What do you usually do at weekends?",
+  "Describe your hometown.",
+  "Do you prefer studying in the morning or at night? Why?"
+];
+/* =========================================================== */
+
+const $=id=>document.getElementById(id);
+let Q=QUESTIONS.slice(), R=[], qi=0, media=null, chunks=[], blob=null, audio=null, data=null, filter="all", pane="err", sel=-1, t0=0, timer=null, peaks=[];
+
+try{$("name").value=localStorage.getItem("spk_name")||""}catch(e){}
+$("name").oninput=()=>{try{localStorage.setItem("spk_name",$("name").value)}catch(e){}};
+const curQ=()=>Q[qi]||"";
+const st=t=>$("status").innerHTML=t;
+const fmt=s=>{s=Math.round(s||0);return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- Câu hỏi: thầy nạp ở #gv, học sinh nhận qua link #q=... ---------- */
+const enc=a=>btoa(unescape(encodeURIComponent(JSON.stringify(a)))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+const dec=s=>JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g,"+").replace(/_/g,"/")))));
+const H=location.hash.slice(1);
+if(H.startsWith("q=")){try{const a=dec(H.slice(2));if(Array.isArray(a)&&a.length)Q=a.map(String)}catch(e){}}
+if(H==="gv"){$("tpanel").hidden=false;$("qList").value=Q.join("\n")}
+$("load").onclick=()=>{
+  const L=$("qList").value.split(/\n+/).map(s=>s.replace(/^\s*\d+[.)]\s*/,"").trim()).filter(Boolean);
+  if(!L.length){st("Thầy điền ít nhất một câu hỏi rồi bấm Nạp câu hỏi.");return}
+  Q=L;R=[];go(0);
+  $("outLink").value=location.href.split("#")[0]+"#q="+enc(L);$("linkRow").hidden=false;
+  st("Đã nạp "+L.length+" câu hỏi, chia thành "+L.length+" phần luyện. Thầy copy link bên trên gửi cho học sinh.");
+};
+$("copy").onclick=async()=>{const i=$("outLink");try{await navigator.clipboard.writeText(i.value);$("copy").textContent="Đã copy ✓"}catch(e){i.select();$("copy").textContent="Bấm Ctrl+C"}};
+function chips(){$("chips").innerHTML=Q.map((q,i)=>`<button class="chip${i==qi?" cur":R[i]?" done":""}" data-i="${i}">Câu ${i+1}${R[i]?" · "+R[i].data.overall:""}</button>`).join("");
+  $("chips").querySelectorAll(".chip").forEach(b=>b.onclick=()=>go(+b.dataset.i))}
+function go(i){
+  if(media&&media.state==="recording")return;
+  qi=i;$("qText").innerHTML=`<span class="qnum">Câu ${i+1}/${Q.length}</span>`+esc(curQ());
+  if(audio){audio.pause();icon(false)}
+  const r=R[i];
+  if(r){data=r.data;blob=r.blob;peaks=r.peaks;audio=r.audio;$("play").disabled=false;$("time").textContent="00:00/"+fmt(r.dur);$("ov").textContent=data.overall||"–";sel=-1;render();drawWave(0)}
+  else{data=null;blob=null;peaks=[];audio=null;$("play").disabled=true;$("ov").textContent="–";$("time").textContent="00:00/00:00";
+    $("transcript").innerHTML='<p class="empty">Bấm <b>Bắt đầu nói</b> để trả lời câu hỏi này.</p>';$("pane").innerHTML='<p class="hint">Kết quả chấm sẽ hiện ở đây sau khi con nói xong.</p>';counts();drawWave(0)}
+  $("rec").textContent=r?"🎙 Nói lại câu này":"🎙 Bắt đầu nói";
+  $("next").disabled=!r;$("next").textContent=i==Q.length-1?"Xem tổng kết ›":"Câu tiếp theo ›";
+  chips();st("");
+}
+$("next").onclick=()=>{if(qi<Q.length-1)go(qi+1);else summary()};
+function summary(){
+  const done=R.filter(Boolean),avg=done.length?Math.round(done.reduce((a,r)=>a+(+r.data.overall||0),0)/done.length*2)/2:"–";
+  $("pane").innerHTML=`<h3>Tổng kết${$("name").value?" – "+esc($("name").value):""}</h3><p>Con đã hoàn thành ${done.length}/${Q.length} câu. Band trung bình: <b>${avg}</b></p>`+
+    Q.map((q,i)=>`<div class="item"><b>Câu ${i+1}:</b> ${esc(q)}<br>Band: <b>${R[i]?R[i].data.overall:"chưa làm"}</b>${R[i]?" · "+R[i].data.errors.length+" lỗi":""}</div>`).join("")+
+    `<p class="empty">Con có thể chụp màn hình gửi thầy nhé.</p>`;
+}
+$("speak").onclick=()=>{const u=new SpeechSynthesisUtterance(curQ());u.lang="en-GB";u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u)};
+
+/* ---------- Ghi âm (xin quyền micro) ---------- */
+$("rec").onclick=async()=>{
+  if(media&&media.state==="recording"){media.stop();return}
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){
+    st("Trình duyệt này không ghi âm được. Con mở link bằng Chrome hoặc Safari mới nhất nhé.");return}
+  st("Trình duyệt sẽ hỏi quyền dùng micro. Con bấm <b>Cho phép / Allow</b> nhé.");
+  try{
+    const s=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+    chunks=[];media=new MediaRecorder(s);
+    media.ondataavailable=e=>e.data.size&&chunks.push(e.data);
+    media.onstop=()=>{s.getTracks().forEach(t=>t.stop());clearInterval(timer);
+      $("rec").classList.remove("live");$("rec").textContent="🎙 Nói lại câu này";
+      blob=new Blob(chunks,{type:media.mimeType||"audio/webm"});grade()};
+    media.start();t0=Date.now();
+    $("rec").classList.add("live");$("rec").textContent="⏹ Dừng & chấm bài";
+    timer=setInterval(()=>{const s=(Date.now()-t0)/1000;st("Đang ghi âm… "+fmt(s)+" (tối đa 2 phút)");if(s>=120)media.stop()},300);
+  }catch(e){
+    st(e.name==="NotAllowedError"||e.name==="SecurityError"
+      ?"Con chưa cho phép dùng micro. Con bấm vào biểu tượng ổ khóa 🔒 cạnh địa chỉ web, chọn <b>Micro → Cho phép</b>, tải lại trang rồi bấm Bắt đầu nói nhé."
+      :e.name==="NotFoundError"?"Không tìm thấy micro trên máy. Con kiểm tra lại tai nghe hoặc micro nhé."
+      :"Không mở được micro ("+esc(e.name)+"). Con tải lại trang và thử lại nhé.")}
+};
+
+/* ---------- Đổi sang WAV 16kHz cho Gemini ---------- */
+async function toWav(b){
+  const ac=new (window.AudioContext||window.webkitAudioContext)();
+  const buf=await ac.decodeAudioData(await b.arrayBuffer());ac.close&&ac.close();
+  const sr=16000,len=Math.ceil(buf.duration*sr),oc=new OfflineAudioContext(1,len,sr);
+  const src=oc.createBufferSource();src.buffer=buf;src.connect(oc.destination);src.start();
+  const r=(await oc.startRendering()).getChannelData(0);
+  const N=70,step=Math.floor(r.length/N)||1;peaks=[];
+  for(let i=0;i<N;i++){let m=0;for(let j=i*step;j<(i+1)*step&&j<r.length;j++)m=Math.max(m,Math.abs(r[j]));peaks.push(m)}
+  const v=new DataView(new ArrayBuffer(44+r.length*2)),w=(o,s)=>[...s].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));
+  w(0,"RIFF");v.setUint32(4,36+r.length*2,true);w(8,"WAVEfmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);
+  v.setUint32(24,sr,true);v.setUint32(28,sr*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,"data");v.setUint32(40,r.length*2,true);
+  for(let i=0;i<r.length;i++){const x=Math.max(-1,Math.min(1,r[i]));v.setInt16(44+i*2,x<0?x*32768:x*32767,true)}
+  return {wav:new Blob([v],{type:"audio/wav"}),dur:buf.duration};
+}
+const b64=b=>new Promise(res=>{const f=new FileReader();f.onload=()=>res(f.result.split(",")[1]);f.readAsDataURL(b)});
+
+/* ---------- Chấm bài ---------- */
+const PROMPT=q=>`You are a strict but kind IELTS Speaking examiner and an English teacher for Vietnamese students.
+Listen carefully to the student's recorded answer to this question: "${q}".
+Tasks:
+1. Transcribe exactly what the student said (keep their mistakes; do not correct the transcript). Mark long hesitations as "..." and fillers (uh, um) as spoken.
+2. Find errors in 4 areas. Choose the MOST important errors only (max 12). Types:
+ "pron" = mispronounced word, wrong word stress, missing final sounds (-s, -ed, -t…), wrong vowel; judge from the AUDIO.
+ "flu" = long pause, repetition, self-correction, unnatural fillers, choppy delivery.
+ "coh" = weak linking, illogical order, answer off-topic or too short.
+ "vocab" = wrong word choice, wrong collocation, redundancy, too basic/repetitive word.
+ "gram" = tense, articles, agreement, prepositions, word form, sentence structure.
+ For each error, "text" MUST be an exact substring copied from your transcript (2-8 words, the shortest span showing the error).
+3. Give band scores (whole or .5) for fc (Fluency & Coherence), lr (Lexical Resource), gra (Grammatical Range & Accuracy), p (Pronunciation), and overall.
+4. "corrected": the student's answer with ONLY the errors fixed, same ideas; wrap each fixed part in **double asterisks**.
+5. "upgraded": a Band 7.5 version keeping the student's original ideas, more natural vocabulary and grammar; wrap upgraded phrases in **double asterisks**.
+All explanations ("note") must be in Vietnamese, short, warm teacher voice addressing the student as "con", ending with "nhé" (e.g. "Con nhớ bật âm /s/ cuối nhé."). "fix" is the correct English form (for pron, give the word + IPA + stress, e.g. "deliver /dɪˈlɪv.ər/").
+"tip": 1-2 câu tiếng Việt, lời khuyên quan trọng nhất cho con.
+If the audio is silent or not English, return empty errors and transcript "".
+Return JSON only:
+{"transcript":"","errors":[{"text":"","type":"pron|flu|coh|vocab|gram","fix":"","note":""}],"scores":{"fc":0,"lr":0,"gra":0,"p":0},"overall":0,"corrected":"","upgraded":"","tip":""}`;
+
+async function grade(){
+  if(GEMINI_KEY.startsWith("DAN_")){st("Thầy chưa dán key Gemini vào trang. Con báo thầy nhé.");return}
+  $("rec").disabled=true;st("Đang chấm bài, con đợi khoảng 10–20 giây nhé…");
+  try{
+    const {wav,dur}=await toWav(blob);
+    if(audio)audio.pause();audio=new Audio(URL.createObjectURL(blob));audio._d=dur;
+    audio.ontimeupdate=()=>{$("time").textContent=fmt(audio.currentTime)+"/"+fmt(dur);drawWave(audio.currentTime/dur)};
+    audio.onended=()=>{icon(false);drawWave(0)};
+    $("play").disabled=false;$("time").textContent="00:00/"+fmt(dur);drawWave(0);
+    const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`,{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({contents:[{parts:[{text:PROMPT(curQ())},{inline_data:{mime_type:"audio/wav",data:await b64(wav)}}]}],
+        generationConfig:{responseMimeType:"application/json",temperature:.2}})});
+    const j=await r.json();
+    if(!r.ok)throw new Error(j.error?j.error.message:r.status);
+    let t=j.candidates[0].content.parts.map(p=>p.text||"").join("");
+    data=JSON.parse(t.slice(t.indexOf("{"),t.lastIndexOf("}")+1));
+    data.errors=(data.errors||[]).map(e=>({...e,g:["pron","flu","coh"].includes(e.type)?"pf":"lg"}));
+    const prev=R[qi];R[qi]={data,blob,peaks,audio,dur};
+    $("ov").textContent=data.overall||"–";sel=-1;render();chips();
+    $("next").disabled=false;$("rec").textContent="🎙 Nói lại câu này";
+    st(!data.transcript?"Thầy chưa nghe được tiếng Anh trong bản ghi. Con nói to, rõ hơn và thử lại nhé."
+      :prev?`Lần trước: <b>${prev.data.overall}</b> → Lần này: <b>${data.overall}</b>. `+(+data.overall>+prev.data.overall?"Con tiến bộ rồi đó!":"Con xem lại feedback và nói lại lần nữa nhé.")
+      :"Con đọc feedback bên phải, rồi bấm <b>Nói lại câu này</b> để nâng cấp bài nói, hoặc bấm <b>Câu tiếp theo</b>.");
+  }catch(e){st("Chấm bài bị lỗi: "+esc(e.message)+". Con bấm nói lại thử nhé.")}
+  $("rec").disabled=false;
+}
+
+/* ---------- Hiển thị ---------- */
+function counts(){const E=data?data.errors:[];$("nAll").textContent=E.length+" lỗi";
+  $("nPf").textContent=E.filter(e=>e.g=="pf").length+" lỗi";$("nLg").textContent=E.filter(e=>e.g=="lg").length+" lỗi"}
+function render(){
+  counts();if(!data)return;
+  const T=data.transcript||"",low=T.toLowerCase(),R=[];
+  data.errors.forEach((e,i)=>{if(!e.text)return;let p=low.indexOf(e.text.toLowerCase());
+    while(p>-1&&R.some(r=>p<r.b&&p+e.text.length>r.a))p=low.indexOf(e.text.toLowerCase(),p+1);
+    if(p>-1)R.push({a:p,b:p+e.text.length,i})});
+  R.sort((x,y)=>x.a-y.a);let h="",c=0;
+  R.forEach(r=>{const e=data.errors[r.i],show=filter=="all"||filter==e.g;
+    h+=esc(T.slice(c,r.a))+`<span class="err ${e.g}${show?"":" dim"}${sel==r.i?" sel":""}" data-i="${r.i}">${esc(T.slice(r.a,r.b))}</span>`;c=r.b});
+  $("transcript").innerHTML=h+esc(T.slice(c))||'<p class="empty">Chưa có nội dung.</p>';
+  $("transcript").querySelectorAll(".err").forEach(s=>s.onclick=()=>{sel=+s.dataset.i;pane="err";setTabs();render()});
+  side();
+}
+const LBL={pron:"Phát âm",flu:"Trôi chảy",coh:"Mạch lạc",vocab:"Từ vựng",gram:"Ngữ pháp"};
+const bold=s=>esc(s||"").replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+function side(){
+  if(!data){return}
+  const s=data.scores||{};let h=`<div class="crit"><div>Trôi chảy &amp; Mạch lạc<b>${s.fc??"–"}</b></div><div>Từ vựng<b>${s.lr??"–"}</b></div><div>Ngữ pháp<b>${s.gra??"–"}</b></div><div>Phát âm<b>${s.p??"–"}</b></div></div>`;
+  if(pane=="err"){
+    let E=data.errors.map((e,i)=>({...e,i})).filter(e=>filter=="all"||filter==e.g);
+    if(sel>-1)E.sort((a,b)=>(b.i==sel)-(a.i==sel));
+    h+=E.length?E.map(e=>`<div class="item"><span class="tag ${e.g}">${LBL[e.type]||e.type}</span><span class="w">${esc(e.text)}</span> → <span class="fix">${esc(e.fix)}</span><div>${esc(e.note)}</div></div>`).join(""):"<p>Không có lỗi ở mục này. Giỏi lắm!</p>";
+    if(data.tip)h+=`<p style="margin-top:14px"><b>Lời khuyên:</b> ${esc(data.tip)}</p>`;
+  }else if(pane=="fix")h+=`<h3>Bài đã sửa lỗi</h3><div class="ptext">${bold(data.corrected)}</div>`;
+  else h+=`<h3>Nâng cấp (giữ nguyên ý của con)</h3><div class="ptext">${bold(data.upgraded)}</div>`;
+  $("pane").innerHTML=h;
+}
+function setTabs(){document.querySelectorAll(".stab").forEach(b=>b.classList.toggle("on",b.dataset.p==pane))}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x==b));render()});
+document.querySelectorAll(".stab").forEach(b=>b.onclick=()=>{pane=b.dataset.p;setTabs();side()});
+
+/* ---------- Player + sóng âm ---------- */
+const icon=p=>$("pIco").innerHTML=p?'<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>':'<path d="M7 4l13 8-13 8z"/>';
+$("play").onclick=()=>{if(!audio)return;if(audio.paused){audio.play();icon(true)}else{audio.pause();icon(false)}};
+function drawWave(f){const c=$("wave"),W=c.clientWidth,H=c.clientHeight,d=devicePixelRatio||1;c.width=W*d;c.height=H*d;const x=c.getContext("2d");x.scale(d,d);
+  const n=peaks.length||70,bw=W/n,mx=Math.max(...peaks,.01);
+  for(let i=0;i<n;i++){const v=peaks.length?.15+.85*peaks[i]/mx:.25,h=v*H;x.fillStyle=i/n<f?"#ef7a3d":"#dcd8e3";
+    x.beginPath();x.roundRect?x.roundRect(i*bw+1,(H-h)/2,Math.max(bw-3,2),h,3):x.rect(i*bw+1,(H-h)/2,Math.max(bw-3,2),h);x.fill()}}
+addEventListener("resize",()=>drawWave(audio?audio.currentTime/audio._d:0));
+go(0);
+</script>
+</body>
+</html>
